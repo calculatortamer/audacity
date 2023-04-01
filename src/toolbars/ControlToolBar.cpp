@@ -206,11 +206,14 @@ void ControlToolBar::Populate()
 
    mRecord->FollowModifierKeys();
 
+<<<<<<< HEAD
    mLoop = MakeButton(this, bmpLoop, bmpLoop, bmpLoopDisabled,
       ID_LOOP_BUTTON,
       true, // this makes it a toggle, like the pause button
       LoopToggleText.Stripped());
 
+=======
+>>>>>>> parent of 1c0030fad (Add looping button to the Control toolbar...)
 #if wxUSE_TOOLTIPS
    RegenerateTooltips();
    wxToolTip::Enable(true);
@@ -346,21 +349,18 @@ void ControlToolBar::ArrangeButtons()
    // Start with a little extra space
    mSizer->Add( 5, 55 );
 
-   // Establish correct tab key sequence with mLoop last
-   mPause->MoveBeforeInTabOrder( mLoop );
-   mPlay->MoveBeforeInTabOrder( mLoop );
-   mStop->MoveBeforeInTabOrder( mLoop );
-   mRewind->MoveBeforeInTabOrder( mLoop );
-   mFF->MoveBeforeInTabOrder( mLoop );
-   mRecord->MoveBeforeInTabOrder( mLoop );
+   mPause->MoveBeforeInTabOrder( mRecord );
+   mPlay->MoveBeforeInTabOrder( mRecord );
+   mStop->MoveBeforeInTabOrder( mRecord );
+   mRewind->MoveBeforeInTabOrder( mRecord );
+   mFF->MoveBeforeInTabOrder( mRecord );
 
    mSizer->Add( mPause,  0, flags, 2 );
    mSizer->Add( mPlay,   0, flags, 2 );
    mSizer->Add( mStop,   0, flags, 2 );
    mSizer->Add( mRewind, 0, flags, 2 );
    mSizer->Add( mFF,     0, flags, 10 );
-   mSizer->Add( mRecord, 0, flags, 10 );
-   mSizer->Add( mLoop, 0, flags, 5 );
+   mSizer->Add( mRecord, 0, flags, 5 );
 
    // Layout the sizer
    mSizer->Layout();
@@ -379,7 +379,6 @@ void ControlToolBar::ReCreateButtons()
    bool pauseDown = false;
    bool recordDown = false;
    bool recordShift = false;
-   bool loopDown = false;
 
    // ToolBar::ReCreateButtons() will get rid of its sizer and
    // since we've attached our sizer to it, ours will get deleted too
@@ -391,7 +390,6 @@ void ControlToolBar::ReCreateButtons()
       pauseDown = mPause->IsDown();
       recordDown = mRecord->IsDown();
       recordShift = mRecord->WasShiftDown();
-      loopDown = mLoop->IsDown();
       Detach( mSizer );
 
       std::unique_ptr < wxSizer > {mSizer}; // DELETE it
@@ -418,9 +416,6 @@ void ControlToolBar::ReCreateButtons()
       mRecord->SetAlternateIdx(recordShift ? 1 : 0);
       mRecord->PushDown();
    }
-
-   if (loopDown)
-      mLoop->PushDown();
 
    EnableDisableButtons();
 
@@ -464,8 +459,6 @@ void ControlToolBar::EnableDisableButtons()
    mFF->SetEnabled(tracks && (paused || (!playing && !recording)));
 
    mPause->SetEnabled(canStop);
-
-   mLoop->SetEnabled( !recording );
 }
 
 void ControlToolBar::SetPlay(bool down, PlayAppearance appearance)

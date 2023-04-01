@@ -102,7 +102,6 @@ class AUDACITY_DLL_API ControlToolBar final : public ToolBar {
       ID_FF_BUTTON,
       ID_REW_BUTTON,
       ID_RECORD_BUTTON,
-      ID_LOOP_BUTTON,
       BUTTON_COUNT,
    };
 
@@ -112,7 +111,6 @@ class AUDACITY_DLL_API ControlToolBar final : public ToolBar {
    AButton *mPause;
    AButton *mStop;
    AButton *mFF;
-   AButton *mLoop;
 
    wxString mStrLocale; // standard locale abbreviation
 
