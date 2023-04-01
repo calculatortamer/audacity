@@ -12,8 +12,11 @@
 
 #include <wx/frame.h>
 
+<<<<<<< HEAD
 #include "AudacityMessageBox.h"
 #include "AudioIO.h"
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 #include "CommonCommandFlags.h"
 #include "Menus.h"
 #include "Project.h"
@@ -166,6 +169,7 @@ void DoSelectSomething(AudacityProject &project)
       DoSelectTimeAndTracks( project, bTime, bTracks );
 }
 
+<<<<<<< HEAD
 void ActivatePlayRegion(AudacityProject &project)
 {
    auto &tracks = TrackList::Get( project );
@@ -292,4 +296,6 @@ void OnSetRegion(AudacityProject &project,
    if (bSelChanged)
       ProjectHistory::Get( project ).ModifyState(false);
 }
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 }

@@ -198,6 +198,12 @@ void GUIPrefs::PopulateOrExchange(ShuttleGui & S)
          S.TieChoice(XXO("Lower time &signature:"), LowerTimeSigSettings);
       }
       S.EndMultiColumn();
+//      S.AddSpace(10);
+// JKC: This is a silly preference.  Kept here as a reminder that we may
+// later want to have configurable button order.
+//      S.TieCheckBox(XXO("&Ergonomic order of Transport Toolbar buttons"),
+//                    wxT("/GUI/ErgonomicTransportButtons"),
+//                    true);
 
    }
    S.EndStatic();

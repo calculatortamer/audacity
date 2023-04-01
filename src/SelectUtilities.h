@@ -30,6 +30,7 @@ AUDACITY_DLL_API void DoSelectAll( AudacityProject &project );
 AUDACITY_DLL_API void DoSelectAllAudio( AudacityProject &project );
 AUDACITY_DLL_API void DoSelectSomething( AudacityProject &project );
 
+<<<<<<< HEAD
 AUDACITY_DLL_API void ActivatePlayRegion(AudacityProject &project);
 AUDACITY_DLL_API void InactivatePlayRegion(AudacityProject &project);
 AUDACITY_DLL_API void TogglePlayRegion(AudacityProject &project);
@@ -41,6 +42,8 @@ AUDACITY_DLL_API void SetPlayRegionToSelection(AudacityProject &project);
    play position */
 AUDACITY_DLL_API void OnSetRegion(AudacityProject &project,
    bool left, bool selection, const TranslatableString &dialogTitle);
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 }
 
 #endif

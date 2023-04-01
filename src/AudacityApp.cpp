@@ -400,6 +400,7 @@ void PopulatePreferences()
       gPrefs->Write(wxT("/GUI/Toolbars/Time/Show"),1);
    }
 
+<<<<<<< HEAD
    if (std::pair{ vMajor, vMinor } < std::pair{ 3, 1 } ) {
       // Reset the control toolbar
       gPrefs->Write(wxT("/GUI/Toolbars/Control/W"), -1);
@@ -424,6 +425,8 @@ void PopulatePreferences()
          gPrefs->DeleteEntry("/GUI/ToolBars/Share Audio/W");
    }
 
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
    // write out the version numbers to the prefs file for future checking
    gPrefs->Write(wxT("/Version/Major"), AUDACITY_VERSION);
    gPrefs->Write(wxT("/Version/Minor"), AUDACITY_RELEASE);

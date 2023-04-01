@@ -62,12 +62,16 @@
 #include "ProjectStatus.h"
 #include "../ProjectWindow.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../SelectUtilities.h"
 #include "Track.h"
 =======
 #include "../Track.h"
 >>>>>>> parent of fbe35947c (Implement the action of the looping button)
 #include "ViewInfo.h"
+=======
+#include "../Track.h"
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 #include "../widgets/AButton.h"
 #include "FileNames.h"
 
@@ -119,6 +123,7 @@ Identifier ControlToolBar::ID()
 ControlToolBar::ControlToolBar( AudacityProject &project )
 : ToolBar(project, XO("Transport"), ID())
 {
+   gPrefs->Read(wxT("/GUI/ErgonomicTransportButtons"), &mErgonomicTransportButtons, true);
    mStrLocale = gPrefs->Read(wxT("/Locale/Language"), wxT(""));
 
    mSizer = NULL;
@@ -210,6 +215,7 @@ void ControlToolBar::Populate()
    mRecord->FollowModifierKeys();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    mLoop = MakeButton(this, bmpLoop, bmpLoop, bmpLoopDisabled,
       ID_LOOP_BUTTON,
       true, // this makes it a toggle, like the pause button
@@ -217,6 +223,8 @@ void ControlToolBar::Populate()
 
 =======
 >>>>>>> parent of 1c0030fad (Add looping button to the Control toolbar...)
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 #if wxUSE_TOOLTIPS
    RegenerateTooltips();
    wxToolTip::Enable(true);
@@ -310,6 +318,12 @@ void ControlToolBar::UpdatePrefs()
    bool updated = false;
    bool active;
 
+   gPrefs->Read( wxT("/GUI/ErgonomicTransportButtons"), &active, true );
+   if( mErgonomicTransportButtons != active )
+   {
+      mErgonomicTransportButtons = active;
+      updated = true;
+   }
    wxString strLocale = gPrefs->Read(wxT("/Locale/Language"), wxT(""));
    if (mStrLocale != strLocale)
    {
@@ -352,6 +366,7 @@ void ControlToolBar::ArrangeButtons()
    // Start with a little extra space
    mSizer->Add( 5, 55 );
 
+<<<<<<< HEAD
    mPause->MoveBeforeInTabOrder( mRecord );
    mPlay->MoveBeforeInTabOrder( mRecord );
    mStop->MoveBeforeInTabOrder( mRecord );
@@ -364,6 +379,39 @@ void ControlToolBar::ArrangeButtons()
    mSizer->Add( mRewind, 0, flags, 2 );
    mSizer->Add( mFF,     0, flags, 10 );
    mSizer->Add( mRecord, 0, flags, 5 );
+=======
+   // Add the buttons in order based on ergonomic setting
+   if( mErgonomicTransportButtons )
+   {
+      mPause->MoveBeforeInTabOrder( mRecord );
+      mPlay->MoveBeforeInTabOrder( mRecord );
+      mStop->MoveBeforeInTabOrder( mRecord );
+      mRewind->MoveBeforeInTabOrder( mRecord );
+      mFF->MoveBeforeInTabOrder( mRecord );
+
+      mSizer->Add( mPause,  0, flags, 2 );
+      mSizer->Add( mPlay,   0, flags, 2 );
+      mSizer->Add( mStop,   0, flags, 2 );
+      mSizer->Add( mRewind, 0, flags, 2 );
+      mSizer->Add( mFF,     0, flags, 10 );
+      mSizer->Add( mRecord, 0, flags, 5 );
+   }
+   else
+   {
+      mRewind->MoveBeforeInTabOrder( mFF );
+      mPlay->MoveBeforeInTabOrder( mFF );
+      mRecord->MoveBeforeInTabOrder( mFF );
+      mPause->MoveBeforeInTabOrder( mFF );
+      mStop->MoveBeforeInTabOrder( mFF );
+
+      mSizer->Add( mRewind, 0, flags, 2 );
+      mSizer->Add( mPlay,   0, flags, 2 );
+      mSizer->Add( mRecord, 0, flags, 2 );
+      mSizer->Add( mPause,  0, flags, 2 );
+      mSizer->Add( mStop,   0, flags, 2 );
+      mSizer->Add( mFF,     0, flags, 5 );
+   }
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 
    // Layout the sizer
    mSizer->Layout();
@@ -568,6 +616,7 @@ void ControlToolBar::OnPause(wxCommandEvent & WXUNUSED(evt))
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ControlToolBar::OnLoop(wxCommandEvent & WXUNUSED(evt))
 {
    // Toggle the state of the play region lock
@@ -580,6 +629,8 @@ void ControlToolBar::OnLoop(wxCommandEvent & WXUNUSED(evt))
 
 =======
 >>>>>>> parent of fbe35947c (Implement the action of the looping button)
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 void ControlToolBar::OnIdle(wxIdleEvent & event)
 {
    event.Skip();
@@ -637,11 +688,14 @@ void ControlToolBar::OnIdle(wxIdleEvent & event)
    else
       // push-downs of the stop button are only momentary and always pop up now
       mStop->PopUp();
+<<<<<<< HEAD
 
    if (ViewInfo::Get(mProject).playRegion.Active())
       mLoop->PushDown();
    else
       mLoop->PopUp();
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
    
    UpdateStatusBar();
    EnableDisableButtons();

@@ -41,7 +41,6 @@
 #include "ProjectStatus.h"
 #include "ProjectWindow.h"
 #include "RefreshCode.h"
-#include "SelectUtilities.h"
 #include "Snap.h"
 #include "Track.h"
 #include "TrackPanelMouseEvent.h"
@@ -1542,7 +1541,10 @@ void AdornedRulerPanel::DoIdle()
          playRegion.GetLastActiveStart(), playRegion.GetLastActiveEnd() }
      || mLastDrawnH != viewInfo.h
      || mLastDrawnZoom != viewInfo.GetZoom()
+<<<<<<< HEAD
      || mLastPlayRegionActive != viewInfo.playRegion.Active()
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
    ;
    if (changed)
       // Cause ruler redraw anyway, because we may be zooming or scrolling,
@@ -1789,7 +1791,11 @@ void AdornedRulerPanel::HandleQPClick(wxMouseEvent &evt, wxCoord mousePosX)
    // Temporarily inactivate play region
    if (mOldPlayRegion.Active() && evt.LeftDown()) {
       //mPlayRegionLock = true;
+<<<<<<< HEAD
       SelectUtilities::InactivatePlayRegion(*mProject);
+=======
+      UnlockPlayRegion();
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
    }
 
    mLeftDownClickUnsnapped[0] = mQuickPlayPosUnsnapped[0];
@@ -2048,7 +2054,11 @@ void AdornedRulerPanel::HandleQPRelease(wxMouseEvent &evt)
       if (mOldPlayRegion.Active()) {
          // Restore Locked Play region
          SetPlayRegion(mOldPlayRegion.GetStart(), mOldPlayRegion.GetEnd());
+<<<<<<< HEAD
          SelectUtilities::ActivatePlayRegion(*mProject);
+=======
+         LockPlayRegion();
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
          // and release local lock
          mOldPlayRegion.SetActive( false );
       }
@@ -2069,7 +2079,11 @@ auto AdornedRulerPanel::QPHandle::Cancel(AudacityProject *pProject) -> Result
             mParent->mOldPlayRegion.GetStart(), mParent->mOldPlayRegion.GetEnd());
          if (mParent->mOldPlayRegion.Active()) {
             // Restore Locked Play region
+<<<<<<< HEAD
             SelectUtilities::ActivatePlayRegion(*pProject);
+=======
+            mParent->LockPlayRegion();
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
             // and release local lock
             mParent->mOldPlayRegion.SetActive( false );
          }
@@ -2411,6 +2425,7 @@ void AdornedRulerPanel::OnAutoScroll(wxCommandEvent&)
 
 void AdornedRulerPanel::OnTogglePlayRegion(wxCommandEvent&)
 {
+<<<<<<< HEAD
    SelectUtilities::TogglePlayRegion(*mProject);
 }
 
@@ -2427,6 +2442,77 @@ void AdornedRulerPanel::OnSetPlayRegionToSelection(wxCommandEvent&)
 
 void AdornedRulerPanel::ShowContextMenu(
    MenuChoice choice, const wxPoint *pPosition)
+=======
+   const auto &viewInfo = ViewInfo::Get( *GetProject() );
+   const auto &playRegion = viewInfo.playRegion;
+   if (playRegion.Locked())
+      UnlockPlayRegion();
+   else
+      LockPlayRegion();
+}
+
+
+// Draws the horizontal <===>
+void AdornedRulerPanel::DoDrawPlayRegion(wxDC * dc)
+{
+   const auto &viewInfo = ViewInfo::Get( *GetProject() );
+   const auto &playRegion = viewInfo.playRegion;
+   auto start = playRegion.GetStart();
+   auto end = playRegion.GetEnd();
+
+   if (start >= 0)
+   {
+      const int x1 = Time2Pos(start);
+      const int x2 = Time2Pos(end)-2;
+      int y = mInner.y - TopMargin + mInner.height/2;
+
+      bool isLocked = playRegion.Locked();
+      AColor::PlayRegionColor(dc, isLocked);
+
+      wxPoint tri[3];
+      wxRect r;
+
+      tri[0].x = x1;
+      tri[0].y = y + PLAY_REGION_GLOBAL_OFFSET_Y;
+      tri[1].x = x1 + PLAY_REGION_TRIANGLE_SIZE;
+      tri[1].y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
+      tri[2].x = x1 + PLAY_REGION_TRIANGLE_SIZE;
+      tri[2].y = y + PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
+      dc->DrawPolygon(3, tri);
+
+      r.x = x1;
+      r.y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
+      r.width = PLAY_REGION_RECT_WIDTH;
+      r.height = PLAY_REGION_TRIANGLE_SIZE*2 + 1;
+      dc->DrawRectangle(r);
+
+      if (end != start)
+      {
+         tri[0].x = x2;
+         tri[0].y = y + PLAY_REGION_GLOBAL_OFFSET_Y;
+         tri[1].x = x2 - PLAY_REGION_TRIANGLE_SIZE;
+         tri[1].y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
+         tri[2].x = x2 - PLAY_REGION_TRIANGLE_SIZE;
+         tri[2].y = y + PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
+         dc->DrawPolygon(3, tri);
+
+         r.x = x2 - PLAY_REGION_RECT_WIDTH + 1;
+         r.y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
+         r.width = PLAY_REGION_RECT_WIDTH;
+         r.height = PLAY_REGION_TRIANGLE_SIZE*2 + 1;
+         dc->DrawRectangle(r);
+
+         r.x = x1 + PLAY_REGION_TRIANGLE_SIZE;
+         r.y = y - PLAY_REGION_RECT_HEIGHT/2 + PLAY_REGION_GLOBAL_OFFSET_Y;
+         r.width = std::max(0, x2-x1 - PLAY_REGION_TRIANGLE_SIZE*2);
+         r.height = PLAY_REGION_RECT_HEIGHT;
+         dc->DrawRectangle(r);
+      }
+   }
+}
+
+void AdornedRulerPanel::ShowContextMenu( MenuChoice choice, const wxPoint *pPosition)
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 {
    wxPoint position;
    if(pPosition)
@@ -2878,6 +2964,33 @@ void AdornedRulerPanel::CreateOverlays()
          pCellularPanel->AddOverlay( mOverlay );
       this->AddOverlay( mOverlay->mPartner );
    }
+}
+
+void AdornedRulerPanel::LockPlayRegion()
+{
+   auto &project = *mProject;
+   auto &tracks = TrackList::Get( project );
+
+   auto &viewInfo = ViewInfo::Get( project );
+   auto &playRegion = viewInfo.playRegion;
+   if (playRegion.GetStart() >= tracks.GetEndTime()) {
+      AudacityMessageBox(
+         XO("Cannot lock region beyond\nend of project."),
+         XO("Error"));
+   }
+   else {
+      playRegion.SetLocked( true );
+      Refresh(false);
+   }
+}
+
+void AdornedRulerPanel::UnlockPlayRegion()
+{
+   auto &project = *mProject;
+   auto &viewInfo = ViewInfo::Get( project );
+   auto &playRegion = viewInfo.playRegion;
+   playRegion.SetLocked( false );
+   Refresh(false);
 }
 
 void AdornedRulerPanel::TogglePinnedHead()

@@ -11,7 +11,11 @@
 #include "../ProjectSettings.h"
 #include "../ProjectWindows.h"
 #include "../ProjectWindow.h"
+<<<<<<< HEAD
 #include "../SelectUtilities.h"
+=======
+#include "../ProjectManager.h"
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 #include "../SoundActivatedRecord.h"
 #include "../TrackPanelAx.h"
 #include "../TrackPanel.h"
@@ -360,11 +364,16 @@ void OnPunchAndRoll(const CommandContext &context)
 
 void OnTogglePlayRegion(const CommandContext &context)
 {
+<<<<<<< HEAD
    SelectUtilities::TogglePlayRegion(context.project);
+=======
+   AdornedRulerPanel::Get( context.project ).LockPlayRegion();
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 }
 
 void OnClearPlayRegion(const CommandContext &context)
 {
+<<<<<<< HEAD
    SelectUtilities::ClearPlayRegion(context.project);
 }
 
@@ -392,6 +401,9 @@ void OnSetPlayRegionOut(const CommandContext &context)
 void OnSetPlayRegionToSelection(const CommandContext &context)
 {
    SelectUtilities::SetPlayRegionToSelection(context.project);
+=======
+   AdornedRulerPanel::Get( context.project ).UnlockPlayRegion();
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 }
 
 void OnRescanDevices(const CommandContext &WXUNUSED(context) )

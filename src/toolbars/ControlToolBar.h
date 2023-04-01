@@ -110,6 +110,12 @@ class AUDACITY_DLL_API ControlToolBar final : public ToolBar {
    AButton *mPause;
    AButton *mStop;
    AButton *mFF;
+<<<<<<< HEAD
+=======
+
+   // Activate ergonomic order for transport buttons
+   bool mErgonomicTransportButtons;
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
 
    wxString mStrLocale; // standard locale abbreviation
 

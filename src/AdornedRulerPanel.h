@@ -63,6 +63,8 @@ public:
 
    void SetPlayRegion(double playRegionStart, double playRegionEnd);
    void ClearPlayRegion();
+   void LockPlayRegion();
+   void UnlockPlayRegion();
    void TogglePinnedHead();
 
    void GetMaxSize(wxCoord *width, wxCoord *height);
@@ -259,8 +261,11 @@ private:
    struct MainGroup;
 
    SelectedRegion mLastDrawnSelectedRegion;
+<<<<<<< HEAD
    std::pair<double, double> mLastDrawnPlayRegion{};
    bool mLastPlayRegionActive = false;
+=======
+>>>>>>> parent of c112f4b76 (Merge pull request #1756 from Paul-Licameli/loop-play-button)
    double mLastDrawnH{};
    double mLastDrawnZoom{};
 
