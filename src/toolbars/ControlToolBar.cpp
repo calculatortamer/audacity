@@ -61,8 +61,12 @@
 #include "../ProjectSettings.h"
 #include "ProjectStatus.h"
 #include "../ProjectWindow.h"
+<<<<<<< HEAD
 #include "../SelectUtilities.h"
 #include "Track.h"
+=======
+#include "../Track.h"
+>>>>>>> parent of fbe35947c (Implement the action of the looping button)
 #include "ViewInfo.h"
 #include "../widgets/AButton.h"
 #include "FileNames.h"
@@ -84,7 +88,6 @@ BEGIN_EVENT_TABLE(ControlToolBar, ToolBar)
    EVT_BUTTON(ID_REW_BUTTON,    ControlToolBar::OnRewind)
    EVT_BUTTON(ID_FF_BUTTON,     ControlToolBar::OnFF)
    EVT_BUTTON(ID_PAUSE_BUTTON,  ControlToolBar::OnPause)
-   EVT_BUTTON(ID_LOOP_BUTTON,   ControlToolBar::OnLoop)
    EVT_IDLE(ControlToolBar::OnIdle)
 END_EVENT_TABLE()
 
@@ -564,6 +567,7 @@ void ControlToolBar::OnPause(wxCommandEvent & WXUNUSED(evt))
    ProjectAudioManager::Get( mProject ).OnPause();
 }
 
+<<<<<<< HEAD
 void ControlToolBar::OnLoop(wxCommandEvent & WXUNUSED(evt))
 {
    // Toggle the state of the play region lock
@@ -574,6 +578,8 @@ void ControlToolBar::OnLoop(wxCommandEvent & WXUNUSED(evt))
       SelectUtilities::ActivatePlayRegion(mProject);
 }
 
+=======
+>>>>>>> parent of fbe35947c (Implement the action of the looping button)
 void ControlToolBar::OnIdle(wxIdleEvent & event)
 {
    event.Skip();
